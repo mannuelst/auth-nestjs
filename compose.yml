@@ -1,0 +1,23 @@
+
+services:
+  mongodb:
+    image: 'bitnami/mongodb:7.0.14'
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE:-mydatabase}
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - mongo_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  mongo_network:
+    driver: bridge
